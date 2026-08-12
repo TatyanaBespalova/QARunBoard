@@ -19,6 +19,15 @@ Before delegation:
 
 If the task is materially ambiguous, do not invent missing requirements. Follow the clarification rules defined in the applicable `AGENTS.md`.
 
+When a feature specification is provided:
+
+- treat the specification as the primary source for intended product behaviour;
+- verify that Goal, Context, Constraints, and Acceptance Criteria are sufficiently clear before implementation;
+- do not silently expand or reinterpret the acceptance criteria;
+- resolve material Open Questions before implementation.
+
+For planned product features, prefer a feature specification based on `docs/specs/FEATURE_SPEC_TEMPLATE.md`.
+
 ## 2. Delegate implementation
 
 Spawn or reactivate the project `code_writer` agent.

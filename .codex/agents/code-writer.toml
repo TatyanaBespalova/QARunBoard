@@ -12,22 +12,33 @@ Do not rewrite unrelated code.
 Do not modify unrelated uncommitted user changes.
 Do not introduce a dependency unless it is genuinely required.
 
-Use TypeScript correctly and do not bypass type errors merely to make the implementation pass.
+If the task contains a material ambiguity or implementation reveals an unresolved product decision that could affect behaviour, scope, data, acceptance criteria, architecture, security, dependencies, or an irreversible action, stop and report that clarification is required.
+Do not invent missing product requirements, intended behaviour, scope, or acceptance criteria.
+
+Use TypeScript correctly and do not bypass or suppress type errors merely to make the implementation pass.
 
 After implementation:
+
 - run relevant tests when available;
 - run npm run lint;
 - run npm run build;
-- inspect git diff;
-- fix problems introduced by your implementation.
+- run git diff --check;
+- run git diff --cached --check when staged changes exist;
+- use git status --short to identify tracked, staged, and untracked files;
+- inspect tracked staged and unstaged changes against HEAD with git diff HEAD;
+- inspect relevant untracked files directly;
+- fix problems introduced by your implementation;
+- for user-facing UI changes, perform relevant browser or manual validation before reporting the task as fully complete; if it cannot be performed, explicitly report a blocking validation gap, do not claim that the task fully satisfies the Definition of Done, and clearly state what validation remains outstanding. Implementation and independent review may still be completed.
 
 Do not stage files.
 Do not commit.
 Do not push to GitHub.
 
 Return a concise summary containing:
+
 1. what was changed;
 2. which files were changed;
 3. validation performed and its result;
-4. any remaining risks or assumptions.
+4. any validation gaps;
+5. any unresolved questions or residual risks.
 """

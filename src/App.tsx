@@ -1,10 +1,22 @@
+import { useState } from 'react'
 import './App.css'
 import StatCard from './components/StatCard'
 import TestCaseTable from './components/TestCaseTable'
 import { demoTestCases } from './data/demoTestCases'
-import type { TestStatus } from './types/testCase'
+import type { Priority, TestStatus } from './types/testCase'
+
+type StatusFilter = TestStatus | 'All'
+type PriorityFilter = Priority | 'All'
+
+const statuses: TestStatus[] = ['Not Run', 'Passed', 'Failed', 'Blocked']
+const priorities: Priority[] = ['Low', 'Medium', 'High', 'Critical']
 
 function App() {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('All')
+  const [priorityFilter, setPriorityFilter] =
+    useState<PriorityFilter>('All')
+
   const total = demoTestCases.length
   const passed = demoTestCases.filter(
     (testCase) => testCase.status === 'Passed',
@@ -19,6 +31,22 @@ function App() {
   const notRun = demoTestCases.filter(
     (testCase) => testCase.status === notRunStatus,
   ).length
+  const normalizedQuery = searchQuery.trim().toLowerCase()
+  const visibleTestCases = demoTestCases.filter((testCase) => {
+    const numericId = String(testCase.id)
+    const formattedId = `TC-${numericId.padStart(3, '0')}`.toLowerCase()
+    const matchesSearch =
+      normalizedQuery === '' ||
+      numericId.includes(normalizedQuery) ||
+      formattedId.includes(normalizedQuery) ||
+      testCase.title.toLowerCase().includes(normalizedQuery)
+    const matchesStatus =
+      statusFilter === 'All' || testCase.status === statusFilter
+    const matchesPriority =
+      priorityFilter === 'All' || testCase.priority === priorityFilter
+
+    return matchesSearch && matchesStatus && matchesPriority
+  })
 
   return (
     <main className="app-shell">
@@ -44,10 +72,62 @@ function App() {
             <p className="section-label">Current test run</p>
             <h2 id="test-cases-title">Test cases</h2>
           </div>
-          <p>{demoTestCases.length} cases</p>
+          <p aria-live="polite">
+            {visibleTestCases.length}{' '}
+            {visibleTestCases.length === 1 ? 'case' : 'cases'}
+          </p>
         </div>
 
-        <TestCaseTable testCases={demoTestCases} />
+        <div className="test-case-controls" aria-label="Filter test cases">
+          <div className="control-field search-field">
+            <label htmlFor="test-case-search">Search</label>
+            <input
+              id="test-case-search"
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search by ID or title"
+            />
+          </div>
+
+          <div className="control-field">
+            <label htmlFor="status-filter">Status</label>
+            <select
+              id="status-filter"
+              value={statusFilter}
+              onChange={(event) =>
+                setStatusFilter(event.target.value as StatusFilter)
+              }
+            >
+              <option value="All">All</option>
+              {statuses.map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="control-field">
+            <label htmlFor="priority-filter">Priority</label>
+            <select
+              id="priority-filter"
+              value={priorityFilter}
+              onChange={(event) =>
+                setPriorityFilter(event.target.value as PriorityFilter)
+              }
+            >
+              <option value="All">All</option>
+              {priorities.map((priority) => (
+                <option key={priority} value={priority}>
+                  {priority}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <TestCaseTable testCases={visibleTestCases} />
       </section>
     </main>
   )

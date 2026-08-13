@@ -112,6 +112,44 @@
   font-size: 1.5rem;
 }
 
+.test-case-controls {
+  display: grid;
+  grid-template-columns: minmax(240px, 2fr) repeat(2, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.control-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-field label {
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.control-field input,
+.control-field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #0f172a;
+  background: #ffffff;
+  font: inherit;
+}
+
+.control-field input:focus-visible,
+.control-field select:focus-visible {
+  outline: 3px solid rgb(37 99 235 / 25%);
+  outline-offset: 1px;
+  border-color: #2563eb;
+}
+
 .table-wrapper {
   overflow-x: auto;
 }
@@ -149,6 +187,13 @@
 
 .test-case-table tbody tr:last-child td {
   border-bottom: 0;
+}
+
+.test-case-table .empty-state {
+  padding: 40px 16px;
+  color: #64748b;
+  text-align: center;
+  white-space: normal;
 }
 
 .badge {
@@ -210,6 +255,10 @@
   }
 
   .statistics {
+    grid-template-columns: 1fr;
+  }
+
+  .test-case-controls {
     grid-template-columns: 1fr;
   }
 }

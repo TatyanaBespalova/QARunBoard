@@ -1,8 +1,26 @@
 :root {
+  --surface-page: #f1f5f9;
+  --surface-panel: #ffffff;
+  --text-strong: #0f172a;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --accent-primary: #2563eb;
+  --focus-ring: rgb(37 99 235 / 25%);
+  --border-default: #dbe3ee;
+  --border-control: #cbd5e1;
+  --border-subtle: #e2e8f0;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --radius-panel: 16px;
+  --shadow-panel: 0 10px 30px rgb(15 23 42 / 8%);
+
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
-  color: #0f172a;
-  background: #f1f5f9;
+  color: var(--text-strong);
+  background: var(--surface-page);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

@@ -1,10 +1,16 @@
-import type { TestCase } from '../types/testCase'
+import {
+  isTestStatus,
+  testStatuses,
+  type TestCase,
+  type TestStatus,
+} from '../types/testCase'
 
 interface TestCaseTableProps {
   testCases: TestCase[]
+  onStatusChange: (id: number, status: TestStatus) => void
 }
 
-function TestCaseTable({ testCases }: TestCaseTableProps) {
+function TestCaseTable({ testCases, onStatusChange }: TestCaseTableProps) {
   return (
     <div className="table-wrapper">
       <table className="test-case-table">
@@ -38,13 +44,26 @@ function TestCaseTable({ testCases }: TestCaseTableProps) {
                   </span>
                 </td>
                 <td>
-                  <span
-                    className={`badge status-${testCase.status
+                  <select
+                    className={`status-select status-${testCase.status
                       .toLowerCase()
                       .replace(' ', '-')}`}
+                    aria-label={`Status for ${testCase.title} (TC-${String(testCase.id).padStart(3, '0')})`}
+                    value={testCase.status}
+                    onChange={(event) => {
+                      const status = event.target.value
+
+                      if (isTestStatus(status)) {
+                        onStatusChange(testCase.id, status)
+                      }
+                    }}
                   >
-                    {testCase.status}
-                  </span>
+                    {testStatuses.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
                 </td>
               </tr>
             ))

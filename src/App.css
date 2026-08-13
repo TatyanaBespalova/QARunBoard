@@ -204,6 +204,22 @@
   font-weight: 700;
 }
 
+.status-select {
+  min-height: 36px;
+  padding: 4px 28px 4px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status-select:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-color: var(--accent-primary);
+}
+
 .priority-critical,
 .status-failed {
   color: #b91c1c;

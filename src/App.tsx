@@ -3,36 +3,43 @@ import './App.css'
 import StatCard from './components/StatCard'
 import TestCaseTable from './components/TestCaseTable'
 import { demoTestCases } from './data/demoTestCases'
-import type { Priority, TestStatus } from './types/testCase'
+import {
+  testStatuses,
+  type Priority,
+  type TestCase,
+  type TestStatus,
+} from './types/testCase'
 
 type StatusFilter = TestStatus | 'All'
 type PriorityFilter = Priority | 'All'
 
-const statuses: TestStatus[] = ['Not Run', 'Passed', 'Failed', 'Blocked']
 const priorities: Priority[] = ['Low', 'Medium', 'High', 'Critical']
 
 function App() {
+  const [testCases, setTestCases] = useState<TestCase[]>(() =>
+    demoTestCases.map((testCase) => ({ ...testCase })),
+  )
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('All')
   const [priorityFilter, setPriorityFilter] =
     useState<PriorityFilter>('All')
 
-  const total = demoTestCases.length
-  const passed = demoTestCases.filter(
+  const total = testCases.length
+  const passed = testCases.filter(
     (testCase) => testCase.status === 'Passed',
   ).length
-  const failed = demoTestCases.filter(
+  const failed = testCases.filter(
     (testCase) => testCase.status === 'Failed',
   ).length
-  const blocked = demoTestCases.filter(
+  const blocked = testCases.filter(
     (testCase) => testCase.status === 'Blocked',
   ).length
   const notRunStatus: TestStatus = 'Not Run'
-  const notRun = demoTestCases.filter(
+  const notRun = testCases.filter(
     (testCase) => testCase.status === notRunStatus,
   ).length
   const normalizedQuery = searchQuery.trim().toLowerCase()
-  const visibleTestCases = demoTestCases.filter((testCase) => {
+  const visibleTestCases = testCases.filter((testCase) => {
     const numericId = String(testCase.id)
     const formattedId = `TC-${numericId.padStart(3, '0')}`.toLowerCase()
     const matchesSearch =
@@ -47,6 +54,14 @@ function App() {
 
     return matchesSearch && matchesStatus && matchesPriority
   })
+
+  const handleStatusChange = (id: number, status: TestStatus) => {
+    setTestCases((currentTestCases) =>
+      currentTestCases.map((testCase) =>
+        testCase.id === id ? { ...testCase, status } : testCase,
+      ),
+    )
+  }
 
   return (
     <main className="app-shell">
@@ -100,7 +115,7 @@ function App() {
               }
             >
               <option value="All">All</option>
-              {statuses.map((status) => (
+              {testStatuses.map((status) => (
                 <option key={status} value={status}>
                   {status}
                 </option>
@@ -127,7 +142,10 @@ function App() {
           </div>
         </div>
 
-        <TestCaseTable testCases={visibleTestCases} />
+        <TestCaseTable
+          testCases={visibleTestCases}
+          onStatusChange={handleStatusChange}
+        />
       </section>
     </main>
   )

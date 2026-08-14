@@ -9,15 +9,15 @@ QARunBoard is a small React and TypeScript test-run dashboard built to demonstra
 ## Current functionality
 
 - Test case dashboard with ID, title, area, priority, and status
-- Summary cards for total, passed, failed, blocked, and not-run cases
-- Direct status changes from each test case row
+- Derived summary cards for total, passed, failed, blocked, and not-run cases
+- Direct status changes through an accessible native select in each test case row
 - Case-insensitive search by test case ID or title
-- Single-select Status and Priority filters that combine with search
+- Single-select Area, Status, and Priority filters that combine with Search using AND logic
 - Live visible-result count and an accessible empty state
 - Responsive table and filter layouts for desktop and narrow screens
-- Lightweight CSS design tokens, visible focus styles, labelled controls, and text-backed status badges
+- Lightweight CSS design tokens, visible focus styles, and labelled controls
 
-Status changes are intentionally in-memory only. Summary cards recalculate from the current test-case state, while Search, Status, and Priority filters remain consistent with those changes. Reloading restores the original demo data.
+Status changes are intentionally in-memory only. Summary cards recalculate from the full current test-case dataset rather than the filtered rows, while Search, Area, Status, and Priority filters remain consistent with those changes. Reloading restores the original demo data and default filter state.
 
 ## Technology
 
@@ -40,7 +40,7 @@ When a requirement is materially unclear, the workflow calls for clarification i
 
 - Oxlint checks the source with `npm run lint`.
 - TypeScript and Vite create a production build with `npm run build`.
-- Chromium-only Playwright journeys validate loading, status changes, summary recalculation, reload reset, search, combined Status and Priority filters, and the empty state.
+- Chromium-only Playwright journeys validate loading, status changes, summary recalculation, reload reset, Search, Area/Status/Priority filtering and combinations, and the empty state.
 - GitHub Actions runs dependency installation, lint, build, Chromium installation, and E2E tests on pushes to `main` and pull requests targeting `main`; successful `main` validation is followed by GitHub Pages deployment.
 
 ## Repository structure

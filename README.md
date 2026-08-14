@@ -2,6 +2,8 @@
 
 QARunBoard is a small React and TypeScript test-run dashboard built to demonstrate a disciplined, reviewable engineering workflow. It presents a local demo dataset of test cases, summarizes run status, and helps users narrow the table with client-side search and filters.
 
+**Live demo:** [TatyanaBespalova.github.io/QARunBoard](https://TatyanaBespalova.github.io/QARunBoard/)
+
 ![QARunBoard dashboard](docs/assets/qarunboard-dashboard.png)
 
 ## Current functionality

@@ -178,10 +178,34 @@
   color: var(--text-body);
 }
 
+.test-case-table tbody td {
+  vertical-align: top;
+  line-height: 36px;
+}
+
+.test-case-table th:nth-child(2),
 .test-case-table td:nth-child(2) {
+  width: 50%;
   min-width: 320px;
+  padding-right: var(--space-6);
+}
+
+.test-case-table td:nth-child(2) {
   color: var(--text-strong);
   font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.test-case-title {
+  display: block;
+  width: 100%;
+  padding: 6px var(--space-3);
+  border: 1px solid var(--border-default);
+  border-radius: 18px;
+  background: var(--surface-page);
+  overflow-wrap: anywhere;
   white-space: normal;
 }
 
@@ -197,14 +221,19 @@
 }
 
 .badge {
-  display: inline-block;
-  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 76px;
+  height: 36px;
+  padding: 0 10px;
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 700;
 }
 
 .status-select {
+  height: 36px;
   min-height: 36px;
   padding: 4px 28px 4px 10px;
   border: 1px solid transparent;

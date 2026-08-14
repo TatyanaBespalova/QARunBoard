@@ -41,7 +41,7 @@ When a requirement is materially unclear, the workflow calls for clarification i
 - Oxlint checks the source with `npm run lint`.
 - TypeScript and Vite create a production build with `npm run build`.
 - Chromium-only Playwright journeys validate loading, status changes, summary recalculation, reload reset, search, combined Status and Priority filters, and the empty state.
-- GitHub Actions runs dependency installation, lint, build, Chromium installation, and E2E tests on pushes to `main` and pull requests targeting `main`.
+- GitHub Actions runs dependency installation, lint, build, Chromium installation, and E2E tests on pushes to `main` and pull requests targeting `main`; successful `main` validation is followed by GitHub Pages deployment.
 
 ## Repository structure
 
@@ -51,7 +51,7 @@ tests/e2e/                   Playwright search-and-filter journey
 docs/specs/                  Feature specifications and template
 .agents/skills/              Reusable implementation and review workflows
 .codex/agents/               Writer and read-only reviewer configurations
-.github/workflows/ci.yml     Main-branch and pull-request validation
+.github/workflows/ci.yml     Pull-request/main validation and Pages deployment from main
 playwright.config.ts         Chromium E2E and Vite web-server configuration
 AGENTS.md                    Project engineering and AI workflow rules
 ```
@@ -90,6 +90,8 @@ Playwright starts the Vite application automatically for the E2E test.
 - Feature specifications and explicit open questions keep ambiguous product decisions out of implementation.
 - Independent review provides a separate check on correctness, scope, workflow consistency, and validation evidence.
 - Small, focused diffs make changes easier to inspect and reduce the risk of unrelated regressions.
+
+[AI engineering learnings](docs/ai-engineering/learnings.md) presents evidence-aware examples of development observations and the reusable workflow lessons derived from them.
 
 ## Current scope and future improvements
 

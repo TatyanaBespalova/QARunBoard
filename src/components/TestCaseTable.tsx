@@ -34,7 +34,9 @@ function TestCaseTable({ testCases, onStatusChange }: TestCaseTableProps) {
             testCases.map((testCase) => (
               <tr key={testCase.id}>
                 <td>TC-{String(testCase.id).padStart(3, '0')}</td>
-                <td>{testCase.title}</td>
+                <td>
+                  <span className="test-case-title">{testCase.title}</span>
+                </td>
                 <td>{testCase.area}</td>
                 <td>
                   <span

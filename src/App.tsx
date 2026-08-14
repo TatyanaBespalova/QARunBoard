@@ -14,12 +14,14 @@ type StatusFilter = TestStatus | 'All'
 type PriorityFilter = Priority | 'All'
 
 const priorities: Priority[] = ['Low', 'Medium', 'High', 'Critical']
+const allAreas = 'All Areas'
 
 function App() {
   const [testCases, setTestCases] = useState<TestCase[]>(() =>
     demoTestCases.map((testCase) => ({ ...testCase })),
   )
   const [searchQuery, setSearchQuery] = useState('')
+  const [areaFilter, setAreaFilter] = useState(allAreas)
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('All')
   const [priorityFilter, setPriorityFilter] =
     useState<PriorityFilter>('All')
@@ -39,6 +41,12 @@ function App() {
     (testCase) => testCase.status === notRunStatus,
   ).length
   const normalizedQuery = searchQuery.trim().toLowerCase()
+  const areas = [
+    ...testCases.reduce(
+      (uniqueAreas, testCase) => uniqueAreas.add(testCase.area),
+      new Set<TestCase['area']>(),
+    ),
+  ]
   const visibleTestCases = testCases.filter((testCase) => {
     const numericId = String(testCase.id)
     const formattedId = `TC-${numericId.padStart(3, '0')}`.toLowerCase()
@@ -49,10 +57,12 @@ function App() {
       testCase.title.toLowerCase().includes(normalizedQuery)
     const matchesStatus =
       statusFilter === 'All' || testCase.status === statusFilter
+    const matchesArea =
+      areaFilter === allAreas || testCase.area === areaFilter
     const matchesPriority =
       priorityFilter === 'All' || testCase.priority === priorityFilter
 
-    return matchesSearch && matchesStatus && matchesPriority
+    return matchesSearch && matchesArea && matchesStatus && matchesPriority
   })
 
   const handleStatusChange = (id: number, status: TestStatus) => {
@@ -103,6 +113,22 @@ function App() {
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder="Search by ID or title"
             />
+          </div>
+
+          <div className="control-field">
+            <label htmlFor="area-filter">Area</label>
+            <select
+              id="area-filter"
+              value={areaFilter}
+              onChange={(event) => setAreaFilter(event.target.value)}
+            >
+              <option value={allAreas}>{allAreas}</option>
+              {areas.map((area) => (
+                <option key={area} value={area}>
+                  {area}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="control-field">

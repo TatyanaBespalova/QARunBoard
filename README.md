@@ -8,13 +8,14 @@ QARunBoard is a small React and TypeScript test-run dashboard built to demonstra
 
 - Test case dashboard with ID, title, area, priority, and status
 - Summary cards for total, passed, failed, blocked, and not-run cases
+- Direct status changes from each test case row
 - Case-insensitive search by test case ID or title
 - Single-select Status and Priority filters that combine with search
 - Live visible-result count and an accessible empty state
 - Responsive table and filter layouts for desktop and narrow screens
 - Lightweight CSS design tokens, visible focus styles, labelled controls, and text-backed status badges
 
-The summary cards always represent the complete demo dataset; filtering changes only the visible table rows and result count.
+Status changes are intentionally in-memory only. Summary cards recalculate from the current test-case state, while Search, Status, and Priority filters remain consistent with those changes. Reloading restores the original demo data.
 
 ## Technology
 
@@ -37,7 +38,7 @@ When a requirement is materially unclear, the workflow calls for clarification i
 
 - Oxlint checks the source with `npm run lint`.
 - TypeScript and Vite create a production build with `npm run build`.
-- A Chromium-only Playwright journey validates loading, search, combined Status and Priority filters, the empty state, and full-dataset summary totals.
+- Chromium-only Playwright journeys validate loading, status changes, summary recalculation, reload reset, search, combined Status and Priority filters, and the empty state.
 - GitHub Actions runs dependency installation, lint, build, Chromium installation, and E2E tests on pushes to `main` and pull requests targeting `main`.
 
 ## Repository structure
@@ -90,6 +91,6 @@ Playwright starts the Vite application automatically for the E2E test.
 
 ## Current scope and future improvements
 
-QARunBoard currently uses a static local demo dataset. It does not include a backend, persistence, authentication, test-case editing, or live test-run integrations.
+QARunBoard currently uses a static local demo dataset. Status edits are in-memory only; it does not include a backend, persistence, authentication, broader test-case editing, or live test-run integrations.
 
 Potential future work could add persisted test runs, editing workflows, richer reporting, and broader automated coverage. These are possible extensions, not implemented features.

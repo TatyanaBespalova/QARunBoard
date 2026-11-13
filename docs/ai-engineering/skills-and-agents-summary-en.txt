@@ -1,0 +1,45 @@
+HOW WE ORGANIZED WORK WITH SKILLS AND AGENTS
+
+Skill — procedure: defines how to perform a task and verify the result.
+
+Agent — executor: performs a task within its role, permissions, and constraints.
+
+1. DESIGN RULES
+
+For each skill and agent, we defined its purpose, responsibilities, constraints, and expected output.
+
+We documented shared requirements in AGENTS.md, workflows in skills, and executor responsibilities in agent configurations.
+
+We created two skills: implement-feature for implementation and review-and-validate for assessment. We divided the work between the code_writer and code_reviewer agents.
+
+2. CONSTRAINTS
+
+- Inspect the existing code before making changes.
+- Stay within the agreed task; do not rewrite unrelated code.
+- Do not invent requirements: ask the user to clarify material ambiguity.
+- Do not add dependencies unless necessary.
+- Do not suppress TypeScript or lint errors, or weaken tests to make checks pass.
+
+3. SECURITY AND SAFETY
+
+- Preserve other people's uncommitted changes.
+- Do not stage, commit, or push without explicit authorization.
+- Do not expose secrets or tokens in client code.
+- Validate external data and preserve security controls.
+- Restrict the reviewer to a read-only sandbox: it reports issues without changing code.
+
+4. QUALITY CONTROL
+
+Implementation required applicable tests, lint, a build, inspection of changes, and browser validation when UI behaviour changed.
+
+The result then went to an independent reviewer. Findings must be supported by evidence; assumptions and optional improvements are distinguished from defects.
+
+Critical, High, and Medium defects trigger a cycle: correction → repeat validation → repeat review.
+
+5. QUALITY OF THE INSTRUCTIONS THEMSELVES
+
+We refined skills and agent instructions based on issues encountered: keeping changes focused, strengthening clarification rules, and requiring evidence for findings.
+
+The repository does not document dedicated automated tests for the skills themselves. Quality control relied on examining the instructions and the results of applying them.
+
+Completion criteria: requirements are met, required checks pass, and independent review is complete. Validation gaps and remaining risks are explicitly reported.
